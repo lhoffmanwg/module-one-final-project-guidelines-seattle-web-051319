@@ -12,5 +12,5 @@ system('clear')
 #call methods
 welcome
 #process_user
-ingredient = process_recipe_query
-get_recepies_from_api(ingredient)
+word = process_word_query
+get_word_from_api(word)

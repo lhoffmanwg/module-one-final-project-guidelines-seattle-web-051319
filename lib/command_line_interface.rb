@@ -24,7 +24,7 @@ def process_user
   #prompt for name, check to see if return vistor
 end
 
-def process_recipe_query
+def process_word_query
   puts "                                           What's your ingredient?"
-  ingredient = gets.chomp.downcase
+  word = gets.chomp.downcase
 end
