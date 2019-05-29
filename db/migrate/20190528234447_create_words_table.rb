@@ -4,6 +4,7 @@ class CreateWordsTable < ActiveRecord::Migration[5.2]
       t.string :headword
       t.string :definition
       t.string :example
+      t.timestamps
     end
   end
 end
