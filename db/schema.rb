@@ -10,6 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_05_28_234447) do
+
+  create_table "user_words", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "word_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "words", force: :cascade do |t|
+    t.string "headword"
+    t.string "definition"
+    t.string "example"
+  end
 
 end
