@@ -1,6 +1,7 @@
 require_relative '../config/environment'
 require_relative "../lib/api_communicator.rb"
 require_relative "../lib/command_line_interface.rb"
+require_relative "../lib/cli_methods.rb"
 
 #turn off debug msgs
 old_logger = ActiveRecord::Base.logger
