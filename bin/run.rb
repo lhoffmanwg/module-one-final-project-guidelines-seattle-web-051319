@@ -12,14 +12,9 @@ system('clear')
 
 #call methods
 welcome
-#process_user
+process_user
 word = process_word_query
+result_hash = get_word_from_api
 
-get_word_from_api(word)
 
 binding.pry
-
-
-sleep(1)
-system('clear')
-#results
