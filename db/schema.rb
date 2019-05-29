@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_234447) do
+ActiveRecord::Schema.define(version: 2019_05_29_203520) do
 
   create_table "user_words", force: :cascade do |t|
     t.integer "user_id"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_234447) do
     t.string "headword"
     t.string "definition"
     t.string "example"
+    t.integer "created_by"
   end
 
 end
