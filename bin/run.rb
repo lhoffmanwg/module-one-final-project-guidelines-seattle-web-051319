@@ -1,6 +1,7 @@
 require_relative '../config/environment'
 require_relative "../lib/api_communicator.rb"
 require_relative "../lib/command_line_interface.rb"
+require 'pry'
 
 #turn off debug msgs
 old_logger = ActiveRecord::Base.logger
@@ -13,4 +14,12 @@ system('clear')
 welcome
 #process_user
 word = process_word_query
+
 get_word_from_api(word)
+
+binding.pry
+
+
+sleep(1)
+system('clear')
+#results
