@@ -50,7 +50,7 @@ def menu_selection(current_user)
       puts "See ya."
       is_running = false
     else # for all other possible selections
-      puts "That was not a valid selection."
+      puts "That was not a valid selection. "
     end
   end
 end
