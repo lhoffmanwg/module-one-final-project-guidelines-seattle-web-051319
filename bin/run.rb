@@ -12,7 +12,7 @@ system('clear')
 
 #call methods
 welcome
-process_user
+current_user = process_user
 word = process_word_query
 result_hash = get_word_from_api
 
