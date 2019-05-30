@@ -1,6 +1,5 @@
 require_relative '../config/environment'
-require_relative "../lib/api_communicator.rb"
-require_relative "../lib/command_line_interface.rb"
+require_all 'lib'
 require 'pry'
 
 #turn off debug msgs
@@ -12,14 +11,11 @@ system('clear')
 
 #call methods
 welcome
-#process_user
-word = process_word_query
+current_user = process_user
+present_menu
+menu_selection(current_user)
+# word = process_word_query
+# result_hash = get_word_from_api
 
-get_word_from_api(word)
 
-binding.pry
-
-
-sleep(1)
-system('clear')
-#results
+# binding.pry
