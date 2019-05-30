@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
         # AND save the word to the user's own personal lexicon
         new_word = Word.create(headword: headword, definition: definition, example: example, created_by: self.id)
         UserWord.create(user: self, word: new_word)
+        
+        self.reload
+        new_word
     end
 
     # PROBLEM TO PONDER
@@ -50,5 +53,9 @@ class User < ActiveRecord::Base
         UserWord.delete(target.id)
         self.reload #refreshes user variable
     end
+<<<<<<< HEAD
 
 end
+=======
+end
+>>>>>>> 9470a8c81dcbaeddc2f21bc2d175f68d62afbc8c
