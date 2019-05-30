@@ -14,8 +14,8 @@ end
 def process_user #check if existing user, else create new record
   # Prompt current user for name
   puts "What's your name?"
-  name = gets.chomp.downcase
-
+  name = gets.chomp.downcase #this line is problematic because it downcases the name variable, and the user's name in creation
+  
   current_user = User.find_by(name: name)
 
   # Checks if current user exists
@@ -33,6 +33,67 @@ def process_user #check if existing user, else create new record
     # RETURNS CURRENT USER SO THAT WE CAN SEARCH DATA RELEVANT TO THIS ONE
     # WHEN CALLING THIS METHOD, SAVE VALUE TO A VARIABLE IN RUN.RB
 end
+
+def menu_selection(current_user)
+  is_running = true
+  while is_running
+    present_menu
+    puts "What next?"
+    puts "Select a number."
+    user_selection = gets.chomp.to_i
+    
+    if user_selection == 1
+      if current_user.words.empty? == false
+        current_user.print_lexicon
+      else
+        puts "You don't have any saved words to view yet."
+        present_menu
+        menu_selection(current_user)
+      end
+
+    elsif user_selection == 2
+      # search for a word
+
+    elsif user_selection == 3
+      puts 
+      puts "CREATING A WORD"
+      puts "-----------------------"
+      puts "What is the new word you want to create?"
+      headword = gets.chomp.downcase
+      puts "What is the definition of #{headword.upcase}?"
+      definition = gets.chomp
+      puts "Give an example sentence using #{headword.upcase}"
+      example = gets.chomp
+      new_word = current_user.create_new_word(headword, definition, example)
+      puts "You created a new word:"
+      binding.pry
+      new_word.print_word_details
+      puts
+    elsif user_selection == 4
+      puts "See ya."
+      is_running = false
+
+    else # for all other possible selections
+      puts "That was not a valid selection."
+      present_menu
+      menu_selection(current_user)
+    end
+  end
+end
+
+def present_menu
+  puts
+  puts "-----------------------"
+  puts "SELECTION MENU"
+  puts "1 - View lexicon"
+  puts "2 - Search for a word <== NOT WORKING. DON'T ACTUALLY PICK THIS."
+  puts "3 - Create a new word"
+  puts "4 - Exit program"
+  puts "-----------------------"
+  puts
+end
+
+
 
 def process_word_query
   puts "Please enter a word."

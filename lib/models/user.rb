@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
         UserWord.create(user: self, word: new_word)
         
         self.reload
+        new_word
     end
         
     # PROBLEM TO PONDER
