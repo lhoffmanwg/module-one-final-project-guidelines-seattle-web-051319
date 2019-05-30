@@ -38,45 +38,18 @@ def menu_selection(current_user)
   is_running = true
   while is_running
     present_menu
-    puts "What next?"
-    puts "Select a number."
-    user_selection = gets.chomp.to_i
+    user_selection = get_user_selection
     
     if user_selection == 1
-      if current_user.words.empty? == false
-        current_user.print_lexicon
-      else
-        puts "You don't have any saved words to view yet."
-        present_menu
-        menu_selection(current_user)
-      end
-
+      view_lexicon(current_user)
     elsif user_selection == 2
       # search for a word
-
     elsif user_selection == 3
-      puts 
-      puts "CREATING A WORD"
-      puts "-----------------------"
-      puts "What is the new word you want to create?"
-      headword = gets.chomp.downcase
-      puts "What is the definition of #{headword.upcase}?"
-      definition = gets.chomp
-      puts "Give an example sentence using #{headword.upcase}"
-      example = gets.chomp
-      new_word = current_user.create_new_word(headword, definition, example)
-      puts "You created a new word:"
-      binding.pry
-      new_word.print_word_details
-      puts
+      create_words(current_user)
     elsif user_selection == 4
-      puts "See ya."
-      is_running = false
-
+      goodbye_message
     else # for all other possible selections
       puts "That was not a valid selection."
-      present_menu
-      menu_selection(current_user)
     end
   end
 end
@@ -93,9 +66,43 @@ def present_menu
   puts
 end
 
+def get_user_selection
+  puts "What next?"
+  puts "Select a number."
+  gets.chomp.to_i
+end
 
+def view_lexicon(current_user)
+  if current_user.words.empty? == false
+    current_user.print_lexicon
+  else
+    puts "You don't have any saved words to view yet."
+  end
+end
 
-def process_word_query
+def create_words(current_user) 
+  # add: check to see if any attributes are left blank, if so, reject creation
+  puts 
+  puts "CREATING A WORD"
+  puts "-----------------------"
+  puts "What is the new word you want to create?"
+  headword = gets.chomp.downcase
+  puts "What is the definition of #{headword.upcase}?"
+  definition = gets.chomp
+  puts "Give an example sentence using #{headword.upcase}"
+  example = gets.chomp
+  new_word = current_user.create_new_word(headword, definition, example)
+  puts "You created a new word:"
+  new_word.print_word_details
+  puts
+end
+
+def goodbye_message
+  puts "See ya."
+  is_running = false
+end
+
+def process_word_query #search new word feature
   puts "Please enter a word."
   word = gets.chomp.downcase
 end
