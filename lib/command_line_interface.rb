@@ -98,7 +98,7 @@ def create_words(current_user)
   puts
 end
 
-def process_word_query(current_user)
+def process_word_query(current_user) # search a new word
   #
   # counter for loop that presents first <limit> words found in db
   #
@@ -113,30 +113,36 @@ def process_word_query(current_user)
   # take user's input <word> and query urban_dictionary db via api, put the resulting hash that api returns into result_hash
   #
   result_hash = get_word_from_api(word)
-  # binding.pry
+  binding.pry
   #
   # takes the complete hash returned by the api processes it to find multiple definitions, words, example keys and grabe their associated values
   #
-  result_hash.each do |k,v| # k=hash v=giant array
-    v.each do |ary_data| #iterate through each hash/entry
-      # binding.pry
-      #
-      # loop that controls how many times app calls #process_results, (the method that displays word, definition, example & asks user if they'd like
-      # to save these to their personal lexicon)
-      #
-      # if counter > limit
-      #   break
-      # else
-      #   counter = counter + 1
-      # end
-      your_definition = ary_data["definition"]
-      your_word = ary_data["word"]
-      your_example = ary_data["example"]
-      results(your_word, your_definition, your_example, current_user)
-    end
+  # J - Return by Most Thumbs Up
+  thumb_count = 0
+  top_rated_entry = nil
+
+  result_hash["list"].each do |ary_data| #iterate through each hash/entry
+    if ary_data["thumbs_up"] > thumb_count
+      thumb_count = ary_data["thumbs_up"]
+      top_rated_entry = ary_data
+    end 
   end
+  # binding.pry
+  #
+  # loop that controls how many times app calls #process_results, (the method that displays word, definition, example & asks user if they'd like
+  # to save these to their personal lexicon)
+  #
+  # if counter > limit
+  #   break
+  # else
+  #   counter = counter + 1
+  # end
+  your_definition = top_rated_entry["definition"]
+  your_word = top_rated_entry["word"]
+  your_example = top_rated_entry["example"]
+  results(your_word, your_definition, your_example, current_user)
 end
-#
+
 # diplays the word, definition and exapmle to user
 
 def results(your_word, your_definition, your_example, current_user)
@@ -163,6 +169,7 @@ def results(your_word, your_definition, your_example, current_user)
       process_word_query(current_user) # asks user to enter another word to search
     elsif response = "n"
       menu_selection(current_user) # returns user to menu
+      # PROBLEMS: sends user back to menu, but continues to run this method
     else # if given inappropriate response
       puts "That was not a valid selection. Try again"
     end
