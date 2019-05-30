@@ -13,8 +13,7 @@ system('clear')
 welcome
 
 ####################### TO DO #################### vars are diff
-$current_user = process_user
-present_menu
+current_user = process_user
 menu_selection(current_user)
 
 # binding.pry

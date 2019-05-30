@@ -109,7 +109,7 @@ end
   sleep(1)
   system('clear')
      if continue == "y"
-       binding.pry
+      #  binding.pry
        process_word_query
        another_word
      elsif continue == "n"
