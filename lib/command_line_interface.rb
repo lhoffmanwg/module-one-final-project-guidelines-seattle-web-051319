@@ -1,7 +1,3 @@
-require 'pry'
-
-# welcome user
-
 def welcome
   puts "Welcome to <app_name>!!".center(ENV["COLUMNS"].to_i, "#")
   puts
@@ -12,7 +8,7 @@ def welcome
 end
 
 def process_user #check if existing user, else create new record
-  # Prompt current user for name
+  
   puts "What's your name?"
   name = gets.chomp.downcase.capitalize
 
@@ -50,7 +46,7 @@ def menu_selection(current_user)
       puts "See ya."
       is_running = false
     else # for all other possible selections
-      puts "That was not a valid selection. Try again"
+      invalid_input
     end
   end
 end
@@ -60,7 +56,7 @@ def present_menu
   puts "-----------------------"
   puts "SELECTION MENU"
   puts "1 - View lexicon"
-  puts "2 - Search for a word <== NOT WORKING. DON'T ACTUALLY PICK THIS."
+  puts "2 - Search for a word"
   puts "3 - Create a new word"
   puts "4 - Exit program"
   puts "-----------------------"
@@ -99,58 +95,42 @@ def create_words(current_user)
 end
 
 def process_word_query(current_user) # search a new word
-  #
-  # counter for loop that presents first <limit> words found in db
-  #
-  # counter = 1
-  # limit = 2
-  #
-  # ask for word from user
-  #
   puts "Please enter a word."
   word = gets.chomp.downcase
-  #
-  # take user's input <word> and query urban_dictionary db via api, put the resulting hash that api returns into result_hash
-  #
+
+  # take user's input <word> and query urban_dictionary db via api, 
+  # put the resulting hash that api returns into result_hash
   result_hash = get_word_from_api(word)
-  binding.pry
-  #
-  # takes the complete hash returned by the api processes it to find multiple definitions, words, example keys and grabe their associated values
-  #
+
   # J - Return by Most Thumbs Up
   thumb_count = 0
   top_rated_entry = nil
 
+  # takes the complete hash returned by the api 
+  # processes it to find multiple definitions, words, example keys 
+  # and grabs their associated values
   result_hash["list"].each do |ary_data| #iterate through each hash/entry
     if ary_data["thumbs_up"] > thumb_count
       thumb_count = ary_data["thumbs_up"]
       top_rated_entry = ary_data
     end 
   end
-  # binding.pry
-  #
-  # loop that controls how many times app calls #process_results, (the method that displays word, definition, example & asks user if they'd like
-  # to save these to their personal lexicon)
-  #
-  # if counter > limit
-  #   break
-  # else
-  #   counter = counter + 1
-  # end
+
   your_definition = top_rated_entry["definition"]
   your_word = top_rated_entry["word"]
   your_example = top_rated_entry["example"]
+
   results(your_word, your_definition, your_example, current_user)
 end
 
 # diplays the word, definition and exapmle to user
 
 def results(your_word, your_definition, your_example, current_user)
-  puts "YOUR WORD:  #{your_word}  "
+  puts "      word: #{your_word.upcase}  "
   puts
-  puts "DEFINITION:  #{your_definition}"
+  puts "definition: #{your_definition}"
   puts
-  puts "EXAMPLE: #{your_example}"
+  puts "   example: #{your_example}"
   puts
   # J - GOAL : Would like to save word via user_word creation
   
@@ -161,7 +141,7 @@ def results(your_word, your_definition, your_example, current_user)
   if continue == "y" # saves word to user
     new_word = Word.create(headword: your_word, definition: your_definition, example: your_example)
     UserWord.create(user_id: current_user.id, word_id: new_word.id)
-    # puts ""
+
   elsif continue == "n" # asks user if they'd like to make another search
     puts "Would you like to search a different word? Y/N"
     response = gets.chomp.downcase 
@@ -171,10 +151,14 @@ def results(your_word, your_definition, your_example, current_user)
       menu_selection(current_user) # returns user to menu
       # PROBLEMS: sends user back to menu, but continues to run this method
     else # if given inappropriate response
-      puts "That was not a valid selection. Try again"
+      invalid_input
     end
   else
-    puts "That was not a valid selection. Try again"
+    invalid_input
   end
+end
+
+def invalid_input
+  puts "That was not a valid selection. Try again"
 end
 
