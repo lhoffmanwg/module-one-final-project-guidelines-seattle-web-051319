@@ -14,7 +14,7 @@ end
 def process_user #check if existing user, else create new record
   # Prompt current user for name
   puts "What's your name?"
-  name = gets.chomp.downcase #this line is problematic because it downcases the name variable, and the user's name in creation
+  name = gets.chomp.downcase.capitalize 
   
   current_user = User.find_by(name: name)
 
@@ -47,7 +47,8 @@ def menu_selection(current_user)
     elsif user_selection == 3
       create_words(current_user)
     elsif user_selection == 4
-      goodbye_message
+      puts "See ya."
+      is_running = false
     else # for all other possible selections
       puts "That was not a valid selection."
     end
@@ -95,11 +96,6 @@ def create_words(current_user)
   puts "You created a new word:"
   new_word.print_word_details
   puts
-end
-
-def goodbye_message
-  puts "See ya."
-  is_running = false
 end
 
 def process_word_query #search new word feature
