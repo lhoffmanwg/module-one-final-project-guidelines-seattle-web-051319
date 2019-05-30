@@ -5,7 +5,7 @@ require 'pry'
 def welcome
  #sw = TermInfo.screen_size[1]
   #puts "Hello".center(sw)
-  Welcome to <app_name>!!".center(ENV["COLUMNS"].to_i, "#")
+  puts "Welcome to <app_name>" #center(ENV["COLUMNS"].to_i, "#")
   puts
   puts "About P<app_name>..."
   puts
@@ -45,7 +45,7 @@ def menu_selection(current_user)
     if user_selection == 1
       view_lexicon(current_user)
     elsif user_selection == 2
-      # search for a word
+      process_api_hash(result_hash)
     elsif user_selection == 3
       create_words(current_user)
     elsif user_selection == 4
@@ -56,6 +56,16 @@ def menu_selection(current_user)
     end
   end
 end
+
+def process_api_hash(result_hash)
+  result_hash.collect do |k,v|
+    v.each do |ary_data|
+          your_definition = ary_data["definition"]
+          your_word = ary_data["word"]
+          your_example = ary_data["example"]
+      end
+   end
+ end
 
 def present_menu
 
