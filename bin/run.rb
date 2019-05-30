@@ -12,7 +12,7 @@ system('clear')
 
 #call methods
 welcome
-process_user
+$name = process_user
 word = process_word_query
 #binding.pry
 result_hash = get_word_from_api(word)

@@ -9,32 +9,32 @@ class User < ActiveRecord::Base
         end
         # returns user's word entries
     end
-    
+
     def see_word_from_lexicon(num)
-        # when viewer views lexicon, 
+        # when viewer views lexicon,
         # they may select word by number
         word = self.words[num - 1]
         # returns selected word entry
         # see User Class for #print_headword_and_definition
         word.print_word_details
         word
-        
+
     end
-    
+
     def create_new_word(headword, definition, example)
-        # Allows user to create a new word, save new word to the database 
+        # Allows user to create a new word, save new word to the database
         # AND save the word to the user's own personal lexicon
         new_word = Word.create(headword: headword, definition: definition, example: example, created_by: self.id)
         UserWord.create(user: self, word: new_word)
     end
-        
+
     # PROBLEM TO PONDER
-    # EDITING: Should an edit have an effect on database entries, and therefore 
+    # EDITING: Should an edit have an effect on database entries, and therefore
     # all users who have a relationship with the same word entry?
     def edit_word(word, attribute, change)
         if word.created_by == self
             word.update(attribute => change)
-        else 
+        else
             puts "Sorry. You can't edit this word."
         end
     end
@@ -50,7 +50,5 @@ class User < ActiveRecord::Base
         UserWord.delete(target.id)
         self.reload #refreshes user variable
     end
-
-
 
 end
