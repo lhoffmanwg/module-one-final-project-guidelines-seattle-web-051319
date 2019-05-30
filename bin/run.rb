@@ -15,7 +15,7 @@ welcome
 $name = process_user
 word = process_word_query
 #binding.pry
-result_hash = get_word_from_api(word)
+#result_hash = get_word_from_api(word)
 
 
 #binding.pry
