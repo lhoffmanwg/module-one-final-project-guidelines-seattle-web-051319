@@ -50,66 +50,13 @@ def menu_selection(current_user)
       puts "See ya."
       is_running = false
     else # for all other possible selections
-      puts "That was not a valid selection."
+      puts "That was not a valid selection. "
     end
   end
 end
 
 def present_menu
   puts
-<<<<<<< HEAD
-  puts
-  puts
-  puts
-  puts
-  puts
-  puts "                                           Welcome to <app_name>!!".center(ENV["COLUMNS"].to_i, "#")
-  puts
-  puts "                                           About P<app_name>..."
-  puts
-  puts "                                           You'll be asked to enter a word"
-  puts "                                           <app_name> will fetch and deliver the highest rated definition"
-  puts
-  puts
-  puts
-end
-
-# check to see is new or existing user, add new user to DB
-
-def process_user
-  # get user input
-  puts "                                           What's your name?"
-  name = gets.chomp.downcase
-  # look for user in db
-  if User.find_by(name: name)
-      puts "                                           Welcome back #{name}!"
-      puts ""
-      puts ""
-    else
-      # user not found so create a new user
-      User.create(name: name)
-      puts"                                             Welcome to <app_name>, #{name}!"
-      puts
-      puts
-      puts
-  end
-  name
-end
-
-#
-# takes word from user
-#
-def process_word_query
-  #
-  # counter for loop that presents first <limit> words found in db
-  #
-  counter = 1
-  limit = 2
-  #
-  # ask for word from user
-  #
-  puts "                                           Please enter a word."
-=======
   puts "-----------------------"
   puts "SELECTION MENU"
   puts "1 - View lexicon"
@@ -151,9 +98,16 @@ def create_words(current_user)
   puts
 end
 
-def process_word_query #search new word feature
-  puts "Please enter a word."
->>>>>>> 9470a8c81dcbaeddc2f21bc2d175f68d62afbc8c
+def process_word_query
+  #
+  # counter for loop that presents first <limit> words found in db
+  #
+  counter = 1
+  limit = 2
+  #
+  # ask for word from user
+  #
+  puts "                                           Please enter a word."
   word = gets.chomp.downcase
   #
   # take user's input <word> and query urban_dictionary db via api, put the resulting hash that api returns into result_hash
