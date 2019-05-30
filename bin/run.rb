@@ -11,7 +11,18 @@ system('clear')
 
 #call methods
 welcome
-current_user = process_user
+
+####################### TO DO #################### vars are diff
+<<<<<<< HEAD
+$name = process_user
+word = process_word_query
+#binding.pry
+#result_hash = get_word_from_api(word)
+
+
+#binding.pry
+=======
+$current_user = process_user
 present_menu
 menu_selection(current_user)
 # word = process_word_query
@@ -19,3 +30,4 @@ menu_selection(current_user)
 
 
 # binding.pry
+>>>>>>> 9470a8c81dcbaeddc2f21bc2d175f68d62afbc8c
