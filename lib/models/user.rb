@@ -53,9 +53,4 @@ class User < ActiveRecord::Base
         UserWord.delete(target.id)
         self.reload #refreshes user variable
     end
-<<<<<<< HEAD
-
 end
-=======
-end
->>>>>>> 9470a8c81dcbaeddc2f21bc2d175f68d62afbc8c

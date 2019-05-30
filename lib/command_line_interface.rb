@@ -133,7 +133,7 @@ def process_word_query
             your_definition = ary_data["definition"]
             your_word = ary_data["word"]
             your_example = ary_data["example"]
-            process_results(your_definition, your_word, your_example)
+            results(your_definition, your_word, your_example)
       end
     end
 end
@@ -142,13 +142,11 @@ end
 
 # TODO; figure this out
 #
-def process_results(your_definition, your_word, your_example)
-end
+
 
 def results(your_word, your_definition, example)
   if your_word != ""
     puts "YOUR WORD:  #{your_word}  "
-
     puts
     puts "DEFINITION:  #{your_definition}"
     puts
@@ -227,34 +225,5 @@ end
 #       end
 #    end
 #  end
-
-
-def another_word
-  puts
-  puts
-  puts "                                            Would you like to try another word? Y/N"
-  continue = gets.chomp.downcase
-  wanna_continue(continue)
 end
 
-  def wanna_continue(continue)
-  sleep(1)
-  system('clear')
-     if continue == "y"
-       binding.pry
-       process_word_query
-       another_word
-     elsif continue == "n"
-       exit
-     elsif continue == "q"
-       exit
-     else
-       try_again
-    end
-end
-
-# def try_again
-#   puts ""
-#   puts "                                              Sorry, I don't understand, please try again"
-#   puts ""
-# end
