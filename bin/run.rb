@@ -14,7 +14,7 @@ system('clear')
 welcome
 process_user
 word = process_word_query
-result_hash = get_word_from_api
+result_hash = get_word_from_api(word)
 
 
 binding.pry
