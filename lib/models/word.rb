@@ -1,7 +1,11 @@
 class Word < ActiveRecord::Base
     belongs_to :userword
 
-    # def self.search_by_headword(user_input) 
+    # has_many :user_words
+    # has_many :users, through: :user_words????
+
+
+    # def self.search_by_headword(user_input)
     #     # Probably doesn't work. Needs to search database AND api
     #     # allows user to search for a word by headword
     #     # if word exists
