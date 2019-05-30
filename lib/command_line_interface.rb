@@ -1,6 +1,6 @@
 require 'pry'
 
-####################################THIS IS THE WELCOME ########################
+#################################### THIS IS THE WELCOME ########################
 
 def welcome
   puts
@@ -13,7 +13,7 @@ def welcome
   puts
   puts "                                           Welcome to <app_name>!!".center(ENV["COLUMNS"].to_i, "#")
   puts
-  puts "                                           About P<app_nmae>..."
+  puts "                                           About P<app_name>..."
   puts
   puts "                                           You'll be asked to enter a word"
   puts "                                           <app_name> will fetch and deliver the highest rated definition"
@@ -22,7 +22,9 @@ def welcome
   puts
 end
 
-def process_user #check if existing user, else create new record
+################################C HECK TO SEE IF NEW OR EXISTING USER ##############################################
+
+def process_user
   puts "                                           What's your name?"
   name = gets.chomp.downcase
   if User.find_by(name: name)
@@ -40,25 +42,31 @@ def process_user #check if existing user, else create new record
     user_id = User.find_by(name: name).id
 end
 
+
+##################################################Jenny is re-designing the UI ############################################
+
+## helper method for several methods to prompt user for input
 def process_word_query
   puts "                                           Please enter a word."
   word = gets.chomp.downcase
-  get_word_from_api(word)
+  result_hash = get_word_from_api(word)
+  result_hash.collect do |k,v|
+      v.each do |ary_data|
+        #ary_data
+            your_definition = ary_data["definition"]
+            your_word = ary_data["word"]
+            your_example = ary_data["example"]
+            process_results(your_definition, your_word, your_example)
+      end
+    end
+  #  process_results(your_definition, your_word, your_example)
 end
 
-def results(result_hash)
-  result_hash.collect do |k,v|
-    v.each do |ary_data|
-      ary_data
-          your_definition = ary_data["definition"]
-          your_word = ary_data["word"]
-          your_example = ary_data["example"]
-          binding.pry
-         end
-      end
-
-  if your_word != ""
-    binding.pry
+def process_results(your_definition, your_word, your_example)
+  #binding.pry
+  #process_api_hash(result_hash)
+  #if your_word != nil
+    #binding.pry
     puts
     puts
     puts
@@ -69,48 +77,57 @@ def results(result_hash)
     puts
     puts "           YOUR WORD:  #{your_word}  "
     puts
+    puts
     puts "           DEFINITION:  #{your_definition}"
     puts
-    puts "           EXAMPLE: #{example}"
+    puts
+    puts "           EXAMPLE: #{your_example}"
+    puts
+    puts
     puts
     puts "           Would you like to save your word and it's details to your personal lexicon? Y/N"
-    response = gets.chomp.downcase
-    write_to_lex(response)
+    puts
+    puts
+    puts
+    puts
+    puts
+    puts
+    puts
+    continue = gets.chomp.downcase
     if continue == "n"
-      wanna_continue(continue)
-    else
-      result_hash = get_word_from_api
-      process_api_hash(result_hash)
+      another_word(continue)
+    else if continue = "y"
+      Word.create(headword: your_word, definition: your_definition, example: your_example)
       puts "process_hash"
-      binding.pry
+    end
       #another_word
       #Word.create(headword: your_word, definition: your_definition, example: example)
-    end
-    elsif your_word == ""
-      binding.pry
-    puts
-    puts
-    puts
-    puts
-    puts
-    puts
-    puts
-    puts
-    puts
-    puts
-    puts                                             "Sorry, we didn't find <interpolate word> in our dictionary"
-    puts
-    puts
-    puts
-    puts                                             "Would you like to try another word? Y/N"
+  #  end
+  #  elsif your_word == ""
+  #    binding.pry
+    # puts
+    # puts
+    # puts
+    # puts
+    # puts
+    # puts
+    # puts
+    # puts
+    # puts
+    # puts
+    # puts                                             "Sorry, we didn't find <interpolate word> in our dictionary"
+    # puts
+    # puts
+    # puts
+    # puts                                             "Would you like to try another word? Y/N"
     continue = gets.chomp.downcase
-    wanna_continue(continue)
+    another_word(continue)
   end
 end
 
 ###################please don't work on this stuff###########################
 #--------------when user says that they want to save their word and assc data, this is called to write to db.
-def process_api_hash(result_hash, response)
+def process_api_hash(result_hash)
   result_hash.collect do |k,v|
     v.each do |ary_data|
           your_definition = ary_data["definition"]
@@ -123,22 +140,23 @@ def process_api_hash(result_hash, response)
    end
  end
 
-def process_api_two(result_hash) # need to merge this into the process_api_hash
-  result_hash.collect do |k,v|
-    v.each do |ary_data|
-          your_definition = ary_data["definition"]
-          your_word = ary_data["word"]
-          your_example = ary_data["example"]
-          puts your_definition
-          puts your_word
-          puts your_example
-      end
-   end
-end
+# def process_api_two(result_hash) # need to merge this into the process_api_hash
+#   result_hash.collect do |k,v|
+#     v.each do |ary_data|
+#           your_definition = ary_data["definition"]
+#           your_word = ary_data["word"]
+#           your_example = ary_data["example"]
+#           puts your_definition
+#           puts your_word
+#           puts your_example
+#       end
+#    end
+# end
 
 def write_to_lex(response, your_word, your_definition, your_example)
   if response = "y"
     Word.create(headword: your_word, definition: your_definition, example: example)
+  end
 end
 
 ######## DUPLICATE #####################
@@ -165,37 +183,32 @@ end
 #       end
 
 
-def another_word
+def another_word(continue)
   puts
   puts
   puts "                                            Would you like to try another word? Y/N"
   continue = gets.chomp.downcase
   wanna_continue(continue)
+  binding.pry
 end
-############################### BROKEN ###############################################
-  # def wanna_continue(continue)
-  # sleep(1)
-  # system('clear')
-  #    case continue
-  #      binding.pry
-  #    when "y"
-  #      process_word_query
-  #      another_word
-  #      #answer = true
-  #    when "n"
-  #      exit
-  #     # answer = false
-  #    when "q"
-  #      exit
-  #     # answer = false
-  #    else
-  #      try_again
-  #   end
-  # end
+
+  def wanna_continue(continue)
+  sleep(1)
+  system('clear')
+     if continue == "y"
+       process_word_query
+       another_word
+     elsif continue == "n"
+       exit
+     elsif continue == "q"
+       exit
+     else
+       try_again
+    end
+end
 
 def try_again
   puts ""
   puts "                                              Sorry, I don't understand, please try again"
   puts ""
-end
 end
