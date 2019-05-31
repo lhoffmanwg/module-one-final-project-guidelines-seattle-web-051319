@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
     has_many :words, through: :user_words
 
     def print_lexicon
+
         # prints a viewable numbered list of user's saved headwords
         self.words.each_with_index do |word, index|
             puts "#{index + 1}. #{word.headword.upcase}"
